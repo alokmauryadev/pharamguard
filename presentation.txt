@@ -1,0 +1,74 @@
+# Presentation: PharmaGuard - AI-Powered Pharmacogenomics
+
+## Slide 1: Title Screen
+**Title:** PharmaGuard
+**Subtitle:** Precision Medicine, Simplified.
+**Tagline:** Preventing Adverse Drug Reactions with GenAI & Genomics.
+**Presenter:** Alok M, Full Stack Engineer
+
+---
+
+## Slide 2: The Problem
+**Headline:** The Silent Danger of "One Size Fits All" Medicine
+- **Adverse Drug Reactions (ADRs)** are a leading cause of hospitalization globally.
+- Standard prescribing does not account for **genetic variations** (e.g., Enzyme deficiencies like CYP2C19).
+- **Complexity**: Genetic data (VCF files) is unreadable to most clinicians.
+- **Gap**: Lack of tools that bridge raw genetic data with actionable clinical insights instantly and securely.
+
+---
+
+## Slide 3: The Solution - PharmaGuard
+**Headline:** Personalized Drug Safety at Your Fingertips
+- **What it is**: A web application that analyzes patient DNA (VCF files) to predict drug response.
+- **How it works**:
+    1. Upload Genetic Data (VCF).
+    2. Select a Medication (e.g., Clopidogrel).
+    3. Get Instant Risk Assessment (Metabolizer Status) + AI Explanation.
+- **Goal**: Empower clinicians and patients to make safer medication choices.
+
+---
+
+## Slide 4: Key Features
+**Headline:** Advanced Tech, Simple Experience
+1.  **Universal VCF Parsing**: Extracts relevant variants (RSIDs) from raw genetic files securely in the browser/server memory.
+2.  **Clinical-Grade Risk Engine**: Rules-based logic grounded in **CPIC (Clinical Pharmacogenetics Implementation Consortium)** guidelines.
+3.  **GenAI "Doctor" Integration**: Uses **Google Gemini** to translate complex phenotypes (e.g., "*2/*2 Diplotype") into plain English advice.
+4.  **Privacy-First Architecture**: Zero data retention. Analysis happens in a transient session; no patient DNA is stored.
+
+---
+
+## Slide 5: Technology Stack
+**Headline:** Built for Speed & Security
+- **Frontend**: Next.js 15 (App Router), React 19, Tailwind CSS (Modern, Responsive UI).
+- **Backend/API**: Next.js Server Functions (Edge-ready).
+- **AI Engine**: Google Gemini 1.5 Flash (via `@google/genai` SDK).
+- **Data Processing**: Custom VCF Parser & JSON-based Knowledge Base.
+- **Reporting**: `jspdf` & `html2canvas` for generating downloadable PDF reports.
+
+---
+
+## Slide 6: Unique Selling Proposition (USP)
+**Headline:** Why PharmaGuard?
+1.  **The "Why" Factor**: Unlike standard tools that just say "High Risk," PharmaGuard uses an LLM to explain *biological mechanisms* (e.g., "Your liver enzyme is inactive, leading to toxicity").
+2.  **Zero-Trust Privacy**: Competitors often store DNA data. We don't. Your genetic code leaves RAM only when you close the tab.
+3.  **Hybrid Intelligence**: Combines deterministic clinical rules (100% accuracy for guidelines) with probabilistic AI (for explanation and context), ensuring safety + clarity.
+
+---
+
+## Slide 7: Future Scope
+**Headline:** Roadmap to Revolutionize Prescribing
+1.  **EHR Integration**: Direct API connections to hospital Electronic Health Records (Epic, Cerner).
+2.  **Expanded Drug Database**: Scaling from top cardiac/psychiatric drugs to a full formulary (200+ drugs).
+3.  **Population Health Analytics**: (Optional opt-in) Aggregating anonymized data to find population-specific risk trends.
+4.  **Mobile App**: A "Wallet" for your genetic data to show any doctor, pharmacy, or ER.
+5.  **Multi-Omics Support**: Incorporating other health markers beyond just DNA.
+
+---
+
+## Slide 8: Conclusion
+**Headline:** The Future of Prescribing is Here
+- PharmaGuard bridges the gap between **Complex Genomics** and **Daily Clinical Practice**.
+- Safe, Secure, and Smart.
+- **Call to Action**: Try the live demo today and see the future of precision medicine.
+
+**[End of Presentation]**

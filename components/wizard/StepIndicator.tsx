@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface StepIndicatorProps {
     currentStep: number;
@@ -9,46 +10,69 @@ interface StepIndicatorProps {
 
 export function StepIndicator({ currentStep, totalSteps, steps }: StepIndicatorProps) {
     return (
-        <div className="w-full max-w-3xl mx-auto mb-12">
-            <div className="relative flex items-center justify-between">
-                {/* Connecting Line */}
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-slate-200 dark:bg-slate-700 rounded-full -z-10" />
-                <div
-                    className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-teal-500 rounded-full -z-10 transition-all duration-500 ease-in-out"
-                    style={{ width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%` }}
-                />
+        <div className="w-full max-w-4xl mx-auto mb-16">
+            <div className="relative flex flex-col items-center">
+                {/* Steps Container */}
+                <div className="flex items-center justify-between w-full relative z-10">
+                    {steps.map((label, index) => {
+                        const stepNumber = index + 1;
+                        const isCompleted = stepNumber < currentStep;
+                        const isCurrent = stepNumber === currentStep;
+                        const isUpcoming = stepNumber > currentStep;
 
-                {steps.map((label, index) => {
-                    const stepNumber = index + 1;
-                    const isCompleted = stepNumber < currentStep;
-                    const isCurrent = stepNumber === currentStep;
+                        return (
+                            <div key={label} className="flex flex-col items-center relative group">
+                                <motion.div
+                                    initial={false}
+                                    animate={{
+                                        scale: isCurrent ? 1.1 : 1,
+                                        backgroundColor: isCompleted || isCurrent ? "#0d9488" : "#ffffff", // teal-600 : white
+                                        borderColor: isCompleted || isCurrent ? "#0d9488" : "#e2e8f0", // teal-600 : slate-200
+                                        color: isCompleted || isCurrent ? "#ffffff" : "#94a3b8", // white : slate-400
+                                    }}
+                                    transition={{ duration: 0.3 }}
+                                    className={cn(
+                                        "flex items-center justify-center w-12 h-12 rounded-full border-2 shadow-sm z-10",
+                                        "font-bold text-lg transition-colors duration-300",
+                                        isUpcoming && "bg-slate-50 dark:bg-slate-900"
+                                    )}
+                                >
+                                    {isCompleted ? (
+                                        <Check className="w-6 h-6" />
+                                    ) : (
+                                        <span>{stepNumber}</span>
+                                    )}
+                                </motion.div>
 
-                    return (
-                        <div key={label} className="flex flex-col items-center gap-2">
-                            <div
-                                className={cn(
-                                    "flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300 bg-white dark:bg-slate-900",
-                                    isCompleted ? "border-teal-500 bg-teal-500 text-white" :
-                                        isCurrent ? "border-teal-500 text-teal-600 scale-110 shadow-lg shadow-teal-500/20" :
-                                            "border-slate-300 dark:border-slate-600 text-slate-400"
-                                )}
-                            >
-                                {isCompleted ? (
-                                    <Check className="w-5 h-5" />
-                                ) : (
-                                    <span className="text-sm font-bold">{stepNumber}</span>
-                                )}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className={cn(
+                                        "absolute top-14 text-sm font-semibold tracking-wide uppercase whitespace-nowrap",
+                                        isCurrent ? "text-teal-600 dark:text-teal-400" :
+                                            isCompleted ? "text-slate-600 dark:text-slate-400" : "text-slate-400 dark:text-slate-600"
+                                    )}
+                                >
+                                    {label}
+                                </motion.div>
                             </div>
-                            <span className={cn(
-                                "hidden sm:block text-xs font-semibold uppercase tracking-wider transition-colors duration-300",
-                                isCurrent ? "text-teal-600 dark:text-teal-400" : "text-slate-400"
-                            )}>
-                                {label}
-                            </span>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
+
+                {/* Progress Bar Background */}
+                <div className="absolute top-6 left-0 w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden -z-0">
+                    {/* Active Progress Bar */}
+                    <motion.div
+                        className="h-full bg-teal-500 rounded-full"
+                        initial={{ width: "0%" }}
+                        animate={{ width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%` }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                    />
+                </div>
             </div>
         </div>
     );
 }
+

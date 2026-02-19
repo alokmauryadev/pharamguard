@@ -9,12 +9,32 @@ export async function generatePDF(elementId: string, filename: string = "report.
     }
 
     try {
-        const canvas = await html2canvas(element, {
+        // Create a clone of the element to avoid modifying the original DOM during capture
+        // overload the clone with specific styles for PDF generation
+        const clone = element.cloneNode(true) as HTMLElement;
+        clone.style.width = "1200px"; // Set a fixed width for consistent PDF layout
+        clone.style.padding = "40px";
+        clone.style.background = "#ffffff";
+
+        // Append clone to body but hide it from view (off-screen)
+        clone.style.position = "absolute";
+        clone.style.left = "-9999px";
+        clone.style.top = "0";
+        document.body.appendChild(clone);
+
+        // Wait for images to load in the clone if necessary (simple delay for now)
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        const canvas = await html2canvas(clone, {
             scale: 2, // Higher scale for better quality
-            useCORS: true, // Allow loading cross-origin images if any
+            useCORS: true, // Allow loading cross-origin images
             logging: false,
-            backgroundColor: "#ffffff", // Ensure white background
+            backgroundColor: "#ffffff",
+            windowWidth: 1200, // Match clone width
         });
+
+        // Clean up
+        document.body.removeChild(clone);
 
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF({
@@ -33,7 +53,6 @@ export async function generatePDF(elementId: string, filename: string = "report.
         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
 
-        // Handle multi-page PDFs if report is long
         while (heightLeft >= 0) {
             position = heightLeft - imgHeight;
             pdf.addPage();

@@ -27,24 +27,22 @@ export async function POST(req: NextRequest) {
         const patientId = "PATIENT_" + Math.random().toString(36).substr(2, 5).toUpperCase();
         const drugs = drugsInput.split(",").map(d => d.trim()).filter(Boolean);
 
-        const results: AnalysisResult[] = [];
+
 
         // 2. Process each drug
-        for (const drug of drugs) {
+        // 2. Process each drug (Concurrent execution for speed)
+        const analysisPromises = drugs.map(async (drug) => {
             const riskProfile = assessRisk(drug, parseResult.variants);
 
             if (!riskProfile) {
-                // Handle unsupported drug gracefully or skip
-                continue;
+                return null; // Skip unsupported drugs
             }
 
-            // 3. Generate Reports (For each relevant gene for the drug - usually just one major one per CPIC)
-            // The requirement schema implies one "primary_gene".
-            // We will pick the first gene returned by assessRisk (usually only 1 for these simple cases)
+            // 3. Generate Reports
             const geneKey = Object.keys(riskProfile)[0] as GeneSymbol;
             const riskData = riskProfile[geneKey];
 
-            // 4. LLM Explanation
+            // 4. LLM Explanation (Parallel)
             const llmExplanation = await generateClinicalExplanation(
                 drug,
                 geneKey,
@@ -52,7 +50,7 @@ export async function POST(req: NextRequest) {
                 parseResult.variants.filter(v => v.gene === geneKey)
             );
 
-            const result: AnalysisResult = {
+            return {
                 patient_id: patientId,
                 drug: drug,
                 timestamp: new Date().toISOString(),
@@ -67,25 +65,26 @@ export async function POST(req: NextRequest) {
                     phenotype: riskData.phenotype,
                     detected_variants: parseResult.variants
                         .filter(v => v.gene === geneKey)
-                        .map(v => ({
+                        .map((v) => ({
                             rsid: v.rsid,
                             genotype: v.genotype,
-                            impact: v.impact
-                        }))
+                            impact: v.impact,
+                        })),
                 },
                 clinical_recommendation: {
-                    summary: riskData.recommendation
+                    summary: riskData.recommendation,
                 },
                 llm_generated_explanation: llmExplanation,
                 quality_metrics: {
                     vcf_parsing_success: parseResult.isSuccess,
                     variant_count: parseResult.variants.length,
-                    error_msg: parseResult.error
-                }
-            };
+                    error_msg: parseResult.error,
+                },
+            } as AnalysisResult;
+        });
 
-            results.push(result);
-        }
+        const resultsOrNull = await Promise.all(analysisPromises);
+        const results = resultsOrNull.filter((r): r is AnalysisResult => r !== null);
 
         return NextResponse.json(results);
 
