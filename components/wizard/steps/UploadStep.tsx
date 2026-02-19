@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { UploadCloud, File as FileIcon, X } from "lucide-react";
+import { UploadCloud, File as FileIcon, X, ArrowRight } from "lucide-react";
 import { useAnalysis } from "@/context/AnalysisContext";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { cn } from "@/lib/utils";
 
 export function UploadStep({ onNext }: { onNext: () => void }) {
@@ -23,10 +22,9 @@ export function UploadStep({ onNext }: { onNext: () => void }) {
     const handleDrop = useCallback((e: React.DragEvent) => {
         e.preventDefault();
         setIsDragOver(false);
-
-        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        if (e.dataTransfer.files?.[0]) {
             const droppedFile = e.dataTransfer.files[0];
-            if (droppedFile.name.endsWith(".vcf") || droppedFile.name.endsWith(".vcf.gz")) { // Basic check
+            if (droppedFile.name.endsWith(".vcf") || droppedFile.name.endsWith(".vcf.gz")) {
                 setFile(droppedFile);
             } else {
                 alert("Please upload a .vcf or .vcf.gz file");
@@ -35,24 +33,36 @@ export function UploadStep({ onNext }: { onNext: () => void }) {
     }, [setFile]);
 
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setFile(e.target.files[0]);
-        }
+        if (e.target.files?.[0]) setFile(e.target.files[0]);
     };
 
     return (
-        <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
+        <div className="space-y-6">
+            {/* Header */}
             <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Upload Genetic Data</h2>
-                <p className="text-slate-600">
-                    We accept standard VCF files (Variant Call Format) from sequencing providers.
+                <h2
+                    className="text-2xl font-bold mb-2"
+                    style={{ color: "var(--foreground)", fontFamily: "var(--font-playfair)" }}
+                >
+                    Upload Genetic Data
+                </h2>
+                <p style={{ color: "var(--gray-500)", fontSize: "14px" }}>
+                    We accept standard VCF files (Variant Call Format) from major sequencing providers.
                 </p>
             </div>
 
-            <GlassCard className={cn(
-                "border-2 border-dashed transition-all duration-300 cursor-pointer min-h-[300px] flex flex-col items-center justify-center gap-4 group",
-                isDragOver ? "border-teal-500 bg-teal-50/50" : "border-slate-300 hover:border-teal-400 hover:bg-slate-50/50 bg-white/50"
-            )}>
+            {/* Drop Zone */}
+            <div
+                className={cn("ds-card transition-all duration-300 cursor-pointer min-h-[280px] flex flex-col items-center justify-center gap-4")}
+                style={{
+                    border: isDragOver
+                        ? "2px dashed var(--primary)"
+                        : "2px dashed var(--gray-200)",
+                    background: isDragOver ? "var(--primary-light)" : "var(--surface)",
+                    borderRadius: "var(--radius-2xl)",
+                    boxShadow: isDragOver ? "0 0 0 4px rgba(76,175,80,0.10)" : "var(--shadow-card)",
+                }}
+            >
                 <input
                     type="file"
                     accept=".vcf,.vcf.gz"
@@ -62,54 +72,73 @@ export function UploadStep({ onNext }: { onNext: () => void }) {
                 />
 
                 {!file ? (
-                    <label htmlFor="file-upload" className="w-full h-full flex flex-col items-center justify-center cursor-pointer"
+                    <label
+                        htmlFor="file-upload"
+                        className="w-full h-full flex flex-col items-center justify-center cursor-pointer py-12 gap-4"
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
                     >
-                        <div className="p-5 rounded-full bg-teal-50 text-teal-600 mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300">
-                            <UploadCloud className="w-10 h-10" />
+                        <div
+                            className="flex items-center justify-center w-20 h-20 rounded-full transition-transform duration-300 hover:scale-110"
+                            style={{ background: "var(--primary-light)" }}
+                        >
+                            <UploadCloud className="w-10 h-10" style={{ color: "var(--primary)" }} />
                         </div>
-                        <p className="text-lg font-bold text-slate-900 mb-1">
-                            Click or drag VCF file here
-                        </p>
-                        <p className="text-sm text-slate-500 font-medium">
-                            Supported formats: .vcf, .vcf.gz
-                        </p>
+                        <div className="text-center">
+                            <p className="text-lg font-bold mb-1" style={{ color: "var(--foreground)" }}>
+                                Click or drag your VCF file here
+                            </p>
+                            <p className="text-sm" style={{ color: "var(--gray-400)" }}>
+                                Supported: .vcf &nbsp;·&nbsp; .vcf.gz
+                            </p>
+                        </div>
+                        <div
+                            className="ds-pill-tag"
+                            style={{ fontSize: "11px", padding: "4px 14px", background: "var(--primary-light)", borderColor: "transparent", color: "var(--primary-dark)" }}
+                        >
+                            Privacy guaranteed — data never stored
+                        </div>
                     </label>
                 ) : (
-                    <div className="w-full max-w-md animate-in zoom-in-95 duration-300">
-                        <div className="relative flex items-center gap-4 p-4 bg-teal-50 border border-teal-200 rounded-xl shadow-sm">
-                            <div className="p-3 bg-white rounded-lg shadow-sm border border-teal-100">
-                                <FileIcon className="w-6 h-6 text-teal-600" />
+                    <div className="w-full max-w-md px-6 py-10">
+                        {/* File card */}
+                        <div
+                            className="flex items-center gap-4 p-4 mb-8 rounded-2xl"
+                            style={{ background: "var(--primary-light)", border: "1px solid #A5D6A7" }}
+                        >
+                            <div
+                                className="flex items-center justify-center w-12 h-12 rounded-xl"
+                                style={{ background: "var(--surface)", boxShadow: "var(--shadow-sm)" }}
+                            >
+                                <FileIcon className="w-6 h-6" style={{ color: "var(--primary)" }} />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-bold text-slate-900 truncate">
+                                <p className="text-sm font-bold truncate" style={{ color: "var(--foreground)" }}>
                                     {file.name}
                                 </p>
-                                <p className="text-xs text-slate-500 font-medium">
-                                    {(file.size / 1024 / 1024).toFixed(2)} MB
+                                <p className="text-xs mt-0.5" style={{ color: "var(--gray-500)" }}>
+                                    {(file.size / 1024 / 1024).toFixed(2)} MB &nbsp;·&nbsp; Ready for analysis
                                 </p>
                             </div>
                             <button
                                 onClick={() => setFile(null)}
-                                className="p-2 hover:bg-red-50 rounded-full text-slate-400 hover:text-red-500 transition-colors"
+                                className="flex items-center justify-center w-8 h-8 rounded-full transition-colors"
+                                style={{ color: "var(--gray-400)" }}
+                                onMouseOver={e => (e.currentTarget.style.background = "#FFEBEE", e.currentTarget.style.color = "var(--error)")}
+                                onMouseOut={e => (e.currentTarget.style.background = "transparent", e.currentTarget.style.color = "var(--gray-400)")}
                             >
-                                <X className="w-5 h-5" />
+                                <X className="w-4 h-4" />
                             </button>
                         </div>
 
-                        <div className="mt-8 text-center">
-                            <button
-                                onClick={onNext}
-                                className="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold shadow-lg hover:bg-slate-800 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all w-full sm:w-auto"
-                            >
-                                Continue to Medications
-                            </button>
-                        </div>
+                        <button onClick={onNext} className="ds-btn-primary w-full justify-center" style={{ fontSize: "15px", padding: "14px" }}>
+                            Continue to Medications
+                            <ArrowRight className="w-4 h-4" />
+                        </button>
                     </div>
                 )}
-            </GlassCard>
+            </div>
         </div>
     );
 }

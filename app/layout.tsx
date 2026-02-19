@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { AnalysisProvider } from "@/context/AnalysisContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "PharmaGuard | AI Precision Medicine",
-  description: "Advanced pharmacogenomic risk prediction powered by AI.",
+  title: "PharmaGuard | AI Pharmacogenomic Risk Analysis",
+  description: "Upload your genomic VCF data and get AI-powered pharmacogenomic risk predictions based on CPIC clinical guidelines.",
 };
 
 export default function RootLayout({
@@ -24,10 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen selection:bg-teal-500/30`}
-      >
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <body className="antialiased min-h-screen">
         <AnalysisProvider>
           {children}
         </AnalysisProvider>
