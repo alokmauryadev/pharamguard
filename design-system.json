@@ -1,0 +1,629 @@
+{
+    "designSystem": {
+        "name": "PharmaGuard Healthcare Design System",
+        "version": "1.0.0",
+        "description": "A modern, clean healthcare design system derived from premium health-tech UI patterns. Combines a nature-inspired landing experience with a data-rich clinical dashboard.",
+        "designPhilosophy": {
+            "style": "Modern Minimalist Healthcare",
+            "mood": "Trustworthy, clean, professional, approachable",
+            "principles": [
+                "White-space-heavy layouts for visual breathing room",
+                "Card-based UI for modular, scannable content",
+                "Rounded shapes (pill buttons, rounded cards) to convey friendliness",
+                "Subtle shadows and depth for layered hierarchy",
+                "Data visualization integrated naturally into dashboard cards",
+                "Nature/organic imagery paired with clinical precision"
+            ]
+        },
+        "colorPalette": {
+            "primary": {
+                "green": {
+                    "value": "#4CAF50",
+                    "variants": {
+                        "50": "#E8F5E9",
+                        "100": "#C8E6C9",
+                        "200": "#A5D6A7",
+                        "300": "#81C784",
+                        "400": "#66BB6A",
+                        "500": "#4CAF50",
+                        "600": "#43A047",
+                        "700": "#388E3C",
+                        "800": "#2E7D32",
+                        "900": "#1B5E20"
+                    },
+                    "usage": "Primary brand color, logos, active states, nature-themed elements, progress indicators"
+                }
+            },
+            "accent": {
+                "orange": {
+                    "value": "#F5A623",
+                    "variants": {
+                        "light": "#FFD180",
+                        "default": "#F5A623",
+                        "dark": "#E65100"
+                    },
+                    "usage": "Call-to-action buttons, social media icons, highlight badges, interactive pill tags"
+                },
+                "blue": {
+                    "value": "#4A7BF7",
+                    "variants": {
+                        "50": "#E3F2FD",
+                        "100": "#BBDEFB",
+                        "200": "#90CAF9",
+                        "300": "#64B5F6",
+                        "400": "#42A5F5",
+                        "500": "#4A7BF7",
+                        "600": "#1E88E5",
+                        "700": "#1565C0"
+                    },
+                    "usage": "Dashboard accents, active calendar dates, selected states, chart highlights, weekly toggle button"
+                }
+            },
+            "neutral": {
+                "white": "#FFFFFF",
+                "offWhite": "#F8F9FA",
+                "backgroundGray": "#F0F1F3",
+                "lightGray": "#E8E8E8",
+                "mediumGray": "#BDBDBD",
+                "darkGray": "#6B7280",
+                "charcoal": "#374151",
+                "nearBlack": "#1A1A2E",
+                "usage": "Backgrounds, borders, secondary text, card surfaces"
+            },
+            "semantic": {
+                "success": "#4CAF50",
+                "warning": "#FFC107",
+                "error": "#EF5350",
+                "info": "#4A7BF7"
+            },
+            "chart": {
+                "yellow": "#F5D063",
+                "green": "#66BB6A",
+                "orange": "#F5A623",
+                "red": "#EF5350",
+                "blue": "#4A7BF7",
+                "usage": "Data visualization bar colors, progress bars, sparklines"
+            }
+        },
+        "typography": {
+            "fontFamilies": {
+                "heading": {
+                    "family": "'Playfair Display', 'Georgia', serif",
+                    "usage": "Hero headings, large display text on landing pages",
+                    "weight": "700-900",
+                    "style": "Bold, high-impact serif for trust and sophistication"
+                },
+                "body": {
+                    "family": "'Inter', 'Segoe UI', 'Roboto', sans-serif",
+                    "usage": "Body text, labels, navigation, dashboard content, card text",
+                    "weight": "400-600",
+                    "style": "Clean, highly legible sans-serif for UI elements"
+                },
+                "mono": {
+                    "family": "'JetBrains Mono', 'Fira Code', monospace",
+                    "usage": "Data values, metrics, numerical displays",
+                    "weight": "500-700"
+                }
+            },
+            "scale": {
+                "displayXL": {
+                    "size": "56px",
+                    "lineHeight": "1.1",
+                    "weight": "800",
+                    "letterSpacing": "-0.02em",
+                    "font": "heading",
+                    "usage": "Hero section main headline"
+                },
+                "displayLG": {
+                    "size": "44px",
+                    "lineHeight": "1.15",
+                    "weight": "700",
+                    "letterSpacing": "-0.01em",
+                    "font": "heading",
+                    "usage": "Section headings"
+                },
+                "h1": {
+                    "size": "32px",
+                    "lineHeight": "1.2",
+                    "weight": "700",
+                    "font": "body",
+                    "usage": "Dashboard greeting, page titles"
+                },
+                "h2": {
+                    "size": "24px",
+                    "lineHeight": "1.3",
+                    "weight": "600",
+                    "font": "body",
+                    "usage": "Card section titles"
+                },
+                "h3": {
+                    "size": "18px",
+                    "lineHeight": "1.4",
+                    "weight": "600",
+                    "font": "body",
+                    "usage": "Card headings, widget titles"
+                },
+                "bodyLG": {
+                    "size": "16px",
+                    "lineHeight": "1.5",
+                    "weight": "400",
+                    "font": "body",
+                    "usage": "Primary body text, descriptions"
+                },
+                "bodyMD": {
+                    "size": "14px",
+                    "lineHeight": "1.5",
+                    "weight": "400",
+                    "font": "body",
+                    "usage": "Secondary body text, card content, labels"
+                },
+                "bodySM": {
+                    "size": "12px",
+                    "lineHeight": "1.4",
+                    "weight": "400",
+                    "font": "body",
+                    "usage": "Captions, helper text, metadata"
+                },
+                "metricXL": {
+                    "size": "48px",
+                    "lineHeight": "1.0",
+                    "weight": "700",
+                    "font": "body",
+                    "usage": "Large dashboard metric numbers"
+                },
+                "metricLG": {
+                    "size": "36px",
+                    "lineHeight": "1.1",
+                    "weight": "600",
+                    "font": "body",
+                    "usage": "Medium metric numbers"
+                },
+                "metricSM": {
+                    "size": "20px",
+                    "lineHeight": "1.2",
+                    "weight": "600",
+                    "font": "body",
+                    "usage": "Small metric/stat values"
+                }
+            }
+        },
+        "spacing": {
+            "unit": "4px",
+            "scale": {
+                "xxs": "4px",
+                "xs": "8px",
+                "sm": "12px",
+                "md": "16px",
+                "lg": "24px",
+                "xl": "32px",
+                "2xl": "48px",
+                "3xl": "64px",
+                "4xl": "96px",
+                "5xl": "128px"
+            },
+            "layout": {
+                "pageMaxWidth": "1280px",
+                "contentMaxWidth": "1120px",
+                "sectionPaddingVertical": "64px",
+                "sectionPaddingHorizontal": "24px",
+                "cardPadding": "24px",
+                "cardGap": "16px",
+                "gridGap": "20px"
+            }
+        },
+        "borderRadius": {
+            "none": "0px",
+            "sm": "4px",
+            "md": "8px",
+            "lg": "12px",
+            "xl": "16px",
+            "2xl": "20px",
+            "3xl": "24px",
+            "pill": "9999px",
+            "circle": "50%",
+            "usage": {
+                "cards": "16px - 20px (xl to 2xl), large rounded corners for friendly feel",
+                "buttons": "9999px (pill) for primary CTAs, 8px-12px for secondary",
+                "inputs": "9999px (pill) for search/email inputs",
+                "tags": "9999px (pill) for category tags and badges",
+                "avatars": "50% (circle)",
+                "images": "16px-24px for feature images and thumbnails",
+                "navBar": "9999px (pill) for navigation container"
+            }
+        },
+        "shadows": {
+            "none": "none",
+            "xs": "0 1px 2px rgba(0, 0, 0, 0.04)",
+            "sm": "0 2px 4px rgba(0, 0, 0, 0.06)",
+            "md": "0 4px 12px rgba(0, 0, 0, 0.08)",
+            "lg": "0 8px 24px rgba(0, 0, 0, 0.10)",
+            "xl": "0 12px 40px rgba(0, 0, 0, 0.12)",
+            "card": "0 4px 20px rgba(0, 0, 0, 0.06)",
+            "cardHover": "0 8px 30px rgba(0, 0, 0, 0.10)",
+            "navbar": "0 2px 8px rgba(0, 0, 0, 0.06)",
+            "dropdown": "0 8px 24px rgba(0, 0, 0, 0.12)",
+            "usage": "Cards use 'card' shadow. Nav bars use 'navbar'. Hover states elevate to 'cardHover'."
+        },
+        "components": {
+            "navigation": {
+                "topBar": {
+                    "style": "Floating pill-shaped nav bar centered at top",
+                    "background": "#FFFFFF",
+                    "shadow": "navbar",
+                    "borderRadius": "pill",
+                    "padding": "8px 24px",
+                    "height": "56px",
+                    "items": {
+                        "style": "Horizontal text links with dropdown carets",
+                        "activeIndicator": "Small colored dot before active item text",
+                        "fontSize": "14px",
+                        "fontWeight": "500",
+                        "gap": "32px"
+                    },
+                    "logo": {
+                        "position": "Left-aligned outside the nav pill",
+                        "style": "Icon + brand name, green-themed"
+                    },
+                    "actions": {
+                        "position": "Right side",
+                        "items": [
+                            "Language selector",
+                            "Login/Register CTA button"
+                        ],
+                        "ctaStyle": "Pill-shaped, orange/accent background, white text"
+                    }
+                },
+                "dashboardNav": {
+                    "style": "Horizontal tab bar at page top (no sidebar)",
+                    "background": "transparent",
+                    "items": {
+                        "style": "Text tabs with icon prefix on active tab",
+                        "activeStyle": "Bold text with icon, subtle underline or dot indicator",
+                        "inactiveStyle": "Gray text, normal weight"
+                    },
+                    "searchBar": {
+                        "style": "Pill-shaped input with search icon",
+                        "background": "#F8F9FA",
+                        "borderRadius": "pill",
+                        "width": "200px"
+                    },
+                    "userProfile": {
+                        "style": "Avatar circle + name + role text, right-aligned",
+                        "avatarSize": "40px"
+                    }
+                }
+            },
+            "buttons": {
+                "primary": {
+                    "background": "accent.orange (landing) or accent.blue (dashboard)",
+                    "color": "#FFFFFF",
+                    "borderRadius": "pill",
+                    "padding": "12px 28px",
+                    "fontSize": "14px",
+                    "fontWeight": "600",
+                    "shadow": "sm",
+                    "hoverEffect": "Slight darken + elevated shadow",
+                    "transition": "all 0.2s ease"
+                },
+                "secondary": {
+                    "background": "transparent",
+                    "border": "1.5px solid neutral.lightGray",
+                    "color": "neutral.charcoal",
+                    "borderRadius": "pill",
+                    "padding": "10px 24px",
+                    "hoverEffect": "Background fill with light gray"
+                },
+                "ghost": {
+                    "background": "transparent",
+                    "color": "neutral.darkGray",
+                    "padding": "8px 16px",
+                    "hoverEffect": "Subtle background tint"
+                },
+                "iconButton": {
+                    "size": "36px",
+                    "borderRadius": "circle",
+                    "background": "accent color or transparent",
+                    "hoverEffect": "Background tint + slight scale"
+                },
+                "ctaWithArrow": {
+                    "style": "Text + right arrow icon (→)",
+                    "fontSize": "14px",
+                    "fontWeight": "600",
+                    "borderRadius": "pill",
+                    "border": "1.5px solid neutral.charcoal",
+                    "padding": "10px 24px"
+                }
+            },
+            "cards": {
+                "base": {
+                    "background": "#FFFFFF",
+                    "borderRadius": "xl (16px)",
+                    "padding": "24px",
+                    "shadow": "card",
+                    "border": "none or 1px solid rgba(0,0,0,0.05)",
+                    "hoverEffect": "Elevated shadow, optional subtle translateY(-2px)"
+                },
+                "statsCard": {
+                    "description": "Compact card displaying a single key metric",
+                    "layout": "Vertical: label on top, large number, unit suffix, optional sparkline/mini-chart",
+                    "background": "#FFFFFF",
+                    "borderRadius": "xl",
+                    "padding": "20px",
+                    "metricFontSize": "metricXL (48px)",
+                    "labelFontSize": "bodySM (12px)",
+                    "miniChartHeight": "40px"
+                },
+                "metricCardWithChart": {
+                    "description": "Card with title, arrow icon, metric progress bar or bar chart",
+                    "layout": "Title + arrow link at top-right, description text, chart visualization below",
+                    "background": "#FFFFFF",
+                    "borderRadius": "2xl (20px)",
+                    "padding": "24px"
+                },
+                "listCard": {
+                    "description": "Card containing a scrollable list of items (e.g., medication list)",
+                    "layout": "Header with icon + title + action icons, then vertical list of items",
+                    "itemLayout": "Icon/avatar + text (title + subtitle) per row",
+                    "itemPadding": "12px 0",
+                    "divider": "1px solid neutral.lightGray between items",
+                    "activeItem": {
+                        "background": "accent.blue or primary.green",
+                        "color": "#FFFFFF",
+                        "borderRadius": "lg (12px)",
+                        "padding": "12px 16px"
+                    }
+                },
+                "scheduleCard": {
+                    "description": "Card with date selector row and appointment list",
+                    "dateRow": "Horizontal number pills, active date highlighted with accent.blue circle",
+                    "appointmentItem": "Avatar + doctor name + specialty + action menu icon"
+                },
+                "featureTag": {
+                    "description": "Floating pill-shaped tag with label and plus icon",
+                    "background": "#FFFFFF",
+                    "borderRadius": "pill",
+                    "padding": "8px 20px",
+                    "shadow": "sm",
+                    "iconStyle": "Small circle with accent color background and + symbol"
+                }
+            },
+            "inputs": {
+                "emailInput": {
+                    "style": "Pill-shaped input with embedded CTA button",
+                    "background": "rgba(255,255,255,0.9) with backdrop blur",
+                    "borderRadius": "pill",
+                    "padding": "6px 6px 6px 24px",
+                    "height": "52px",
+                    "placeholder": "Enter your email",
+                    "embeddedButton": {
+                        "position": "Right side, inside input",
+                        "style": "Pill CTA with border",
+                        "text": "Get Started →"
+                    }
+                },
+                "searchInput": {
+                    "style": "Pill-shaped with search icon prefix",
+                    "background": "#F8F9FA",
+                    "border": "1px solid neutral.lightGray",
+                    "borderRadius": "pill",
+                    "padding": "10px 20px",
+                    "iconColor": "neutral.mediumGray"
+                }
+            },
+            "avatars": {
+                "sizes": {
+                    "xs": "24px",
+                    "sm": "32px",
+                    "md": "40px",
+                    "lg": "48px",
+                    "xl": "64px"
+                },
+                "style": "Circular with subtle border",
+                "groupOverlap": "-8px margin-left for stacked avatars",
+                "border": "2px solid #FFFFFF"
+            },
+            "badges": {
+                "dot": {
+                    "size": "8px",
+                    "color": "primary.green",
+                    "usage": "Active nav item indicator"
+                },
+                "countBadge": {
+                    "borderRadius": "pill",
+                    "padding": "2px 8px",
+                    "fontSize": "10px",
+                    "fontWeight": "700",
+                    "background": "accent.orange or semantic.error"
+                }
+            },
+            "socialIcons": {
+                "size": "40px",
+                "borderRadius": "circle",
+                "background": "accent.orange",
+                "color": "#FFFFFF",
+                "gap": "12px",
+                "hoverEffect": "Scale(1.1) + darken background"
+            },
+            "charts": {
+                "progressBar": {
+                    "height": "8px",
+                    "borderRadius": "pill",
+                    "trackColor": "neutral.lightGray",
+                    "fillGradient": "linear-gradient(to right, chart.yellow, chart.green)",
+                    "usage": "Horizontal progress indicator with percentage labels below"
+                },
+                "barChart": {
+                    "barWidth": "12px-20px",
+                    "borderRadius": "4px top corners",
+                    "colors": "chart palette (yellow, orange, blue, green)",
+                    "axisColor": "neutral.mediumGray",
+                    "labelFontSize": "12px",
+                    "gridLines": "Subtle horizontal dashed lines"
+                },
+                "sparkline": {
+                    "height": "40px",
+                    "strokeWidth": "2px",
+                    "strokeColor": "accent.blue",
+                    "fillOpacity": "0.05",
+                    "usage": "Inline mini charts inside metric cards"
+                },
+                "miniBarChart": {
+                    "barWidth": "6px",
+                    "height": "30px",
+                    "borderRadius": "2px",
+                    "colors": [
+                        "accent.blue",
+                        "neutral.lightGray"
+                    ],
+                    "usage": "Compact bar chart inside stats cards"
+                }
+            },
+            "datePicker": {
+                "style": "Inline horizontal date strip",
+                "daySize": "36px",
+                "activeDay": {
+                    "background": "accent.blue",
+                    "color": "#FFFFFF",
+                    "borderRadius": "circle"
+                },
+                "inactiveDay": {
+                    "background": "transparent",
+                    "color": "neutral.darkGray"
+                }
+            },
+            "dropdowns": {
+                "style": "Pill-shaped trigger with chevron icon",
+                "menuBackground": "#FFFFFF",
+                "menuShadow": "dropdown",
+                "menuBorderRadius": "lg (12px)",
+                "menuItemPadding": "10px 16px",
+                "menuItemHover": "neutral.offWhite background"
+            },
+            "tooltips": {
+                "background": "neutral.nearBlack",
+                "color": "#FFFFFF",
+                "borderRadius": "md (8px)",
+                "padding": "6px 12px",
+                "fontSize": "12px",
+                "arrow": true
+            }
+        },
+        "layout": {
+            "landingPage": {
+                "structure": "Full-width sections stacked vertically",
+                "maxWidth": "1280px",
+                "heroSection": {
+                    "height": "~90vh",
+                    "background": "neutral.backgroundGray (light gray)",
+                    "layout": "Centered heading text at top, large central image below, floating feature tags around image",
+                    "headingAlignment": "Center",
+                    "ctaPosition": "Below image, overlapping slightly with email input bar"
+                },
+                "statsBar": {
+                    "layout": "Horizontal row of 2-3 metric cards at bottom of hero",
+                    "background": "Each card is white with rounded corners",
+                    "gap": "16px"
+                },
+                "communityBar": {
+                    "layout": "Full-width dark green band with centered text and social icons",
+                    "background": "primary.green.700",
+                    "textColor": "#FFFFFF",
+                    "borderRadius": "xl on top corners"
+                }
+            },
+            "dashboardPage": {
+                "structure": "Top nav + main content grid below",
+                "background": "neutral.offWhite or neutral.backgroundGray",
+                "maxWidth": "1400px",
+                "grid": {
+                    "columns": "2-3 column responsive grid",
+                    "leftColumn": "40% — Large visual/anatomical display",
+                    "rightColumns": "60% — Cards stacked in grid (stats row, list card, schedule card)",
+                    "gap": "20px"
+                },
+                "greeting": {
+                    "position": "Top-left below nav",
+                    "fontSize": "h1 (32px)",
+                    "fontWeight": "700",
+                    "subtitle": "bodyMD, neutral.darkGray"
+                },
+                "actionBar": {
+                    "position": "Top-right below nav",
+                    "items": [
+                        "Date picker",
+                        "Time selector",
+                        "Period toggle (Weekly)"
+                    ],
+                    "style": "Pill-shaped filter buttons in a horizontal row"
+                }
+            }
+        },
+        "animations": {
+            "transitions": {
+                "default": "all 0.2s ease",
+                "slow": "all 0.3s ease",
+                "spring": "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)"
+            },
+            "hoverEffects": {
+                "cards": "translateY(-2px) + elevated shadow",
+                "buttons": "Slight scale(1.02) + color darken",
+                "icons": "scale(1.1)",
+                "links": "Color transition to accent"
+            },
+            "entranceAnimations": {
+                "fadeInUp": "opacity 0→1, translateY(20px→0), duration 0.4s",
+                "fadeIn": "opacity 0→1, duration 0.3s",
+                "scaleIn": "scale(0.95→1) + opacity 0→1, duration 0.3s",
+                "staggerChildren": "Each child delays 0.05s-0.1s"
+            }
+        },
+        "iconography": {
+            "style": "Outlined/linear icons with 1.5px-2px stroke weight",
+            "size": {
+                "xs": "14px",
+                "sm": "16px",
+                "md": "20px",
+                "lg": "24px",
+                "xl": "32px"
+            },
+            "color": "Inherits text color or uses accent color",
+            "recommendedLibraries": [
+                "Lucide Icons",
+                "Phosphor Icons",
+                "Heroicons"
+            ],
+            "specialIcons": {
+                "categoryIcons": "Small colored circle background (40px) with white icon inside",
+                "actionIcons": "Three-dot menu (⋯) for card actions, arrows for links"
+            }
+        },
+        "responsiveBreakpoints": {
+            "mobile": "0-639px",
+            "tablet": "640-1023px",
+            "desktop": "1024-1279px",
+            "largeDesktop": "1280px+"
+        },
+        "patterns": {
+            "glassmorphism": {
+                "usage": "Email input bar overlaying hero image, floating nav bar",
+                "background": "rgba(255, 255, 255, 0.85)",
+                "backdropFilter": "blur(12px)",
+                "border": "1px solid rgba(255, 255, 255, 0.3)"
+            },
+            "floatingElements": {
+                "usage": "Feature tags floating around hero image, nav bar floating above content",
+                "shadow": "lg",
+                "animation": "Subtle float/bobbing animation optional"
+            },
+            "cardGrid": {
+                "usage": "Dashboard main layout, stats rows, feature sections",
+                "columns": "auto-fit, minmax(280px, 1fr)",
+                "gap": "16px-20px"
+            },
+            "gradientAccents": {
+                "progressBars": "linear-gradient(to right, #F5D063, #66BB6A)",
+                "heroBg": "Subtle radial gradient from white center to light gray edges"
+            }
+        }
+    }
+}

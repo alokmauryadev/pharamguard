@@ -1,0 +1,6 @@
+##fileformat=VCFv4.2
+##fileDate=20240219
+##source=PharmaGuard_Sample_Generator
+##reference=hg38
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	SAMPLE
+1	97547953	rs3918290	G	A	99	PASS	.	GT	0/1
