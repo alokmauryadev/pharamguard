@@ -43,15 +43,15 @@ export function UploadStep({ onNext }: { onNext: () => void }) {
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
             <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Upload Genetic Data</h2>
-                <p className="text-slate-600 dark:text-slate-400">
+                <h2 className="text-2xl font-bold text-slate-900 mb-2">Upload Genetic Data</h2>
+                <p className="text-slate-600">
                     We accept standard VCF files (Variant Call Format) from sequencing providers.
                 </p>
             </div>
 
             <GlassCard className={cn(
                 "border-2 border-dashed transition-all duration-300 cursor-pointer min-h-[300px] flex flex-col items-center justify-center gap-4 group",
-                isDragOver ? "border-teal-500 bg-teal-50/50" : "border-slate-300 dark:border-slate-700 hover:border-teal-400 hover:bg-slate-50/50"
+                isDragOver ? "border-teal-500 bg-teal-50/50" : "border-slate-300 hover:border-teal-400 hover:bg-slate-50/50 bg-white/50"
             )}>
                 <input
                     type="file"
@@ -67,33 +67,33 @@ export function UploadStep({ onNext }: { onNext: () => void }) {
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
                     >
-                        <div className="p-4 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:text-teal-500 group-hover:scale-110 transition-all duration-300 mb-4">
+                        <div className="p-5 rounded-full bg-teal-50 text-teal-600 mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300">
                             <UploadCloud className="w-10 h-10" />
                         </div>
-                        <p className="text-lg font-medium text-slate-900 dark:text-white mb-1">
+                        <p className="text-lg font-bold text-slate-900 mb-1">
                             Click or drag VCF file here
                         </p>
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-slate-500 font-medium">
                             Supported formats: .vcf, .vcf.gz
                         </p>
                     </label>
                 ) : (
-                    <div className="w-full max-w-md">
-                        <div className="relative flex items-center gap-4 p-4 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-xl">
-                            <div className="p-3 bg-teal-100 dark:bg-teal-800 rounded-lg">
-                                <FileIcon className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+                    <div className="w-full max-w-md animate-in zoom-in-95 duration-300">
+                        <div className="relative flex items-center gap-4 p-4 bg-teal-50 border border-teal-200 rounded-xl shadow-sm">
+                            <div className="p-3 bg-white rounded-lg shadow-sm border border-teal-100">
+                                <FileIcon className="w-6 h-6 text-teal-600" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-slate-900 dark:text-white truncate">
+                                <p className="text-sm font-bold text-slate-900 truncate">
                                     {file.name}
                                 </p>
-                                <p className="text-xs text-slate-500">
+                                <p className="text-xs text-slate-500 font-medium">
                                     {(file.size / 1024 / 1024).toFixed(2)} MB
                                 </p>
                             </div>
                             <button
                                 onClick={() => setFile(null)}
-                                className="p-1 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-full text-slate-400 hover:text-red-500 transition-colors"
+                                className="p-2 hover:bg-red-50 rounded-full text-slate-400 hover:text-red-500 transition-colors"
                             >
                                 <X className="w-5 h-5" />
                             </button>
@@ -102,7 +102,7 @@ export function UploadStep({ onNext }: { onNext: () => void }) {
                         <div className="mt-8 text-center">
                             <button
                                 onClick={onNext}
-                                className="px-8 py-3 bg-slate-900 text-white rounded-xl font-semibold shadow-lg hover:bg-slate-800 hover:scale-105 active:scale-95 transition-all w-full sm:w-auto"
+                                className="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold shadow-lg hover:bg-slate-800 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all w-full sm:w-auto"
                             >
                                 Continue to Medications
                             </button>

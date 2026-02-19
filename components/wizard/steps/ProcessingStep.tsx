@@ -25,14 +25,14 @@ export function ProcessingStep() {
         <div className="max-w-xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
             <GlassCard className="text-center py-12">
                 <div className="relative w-24 h-24 mx-auto mb-8">
-                    <div className="absolute inset-0 rounded-full border-4 border-slate-100 dark:border-slate-800" />
+                    <div className="absolute inset-0 rounded-full border-4 border-slate-100" />
                     <div className="absolute inset-0 rounded-full border-4 border-teal-500 border-t-transparent animate-spin" />
                     <div className="absolute inset-0 flex items-center justify-center">
                         <Brain className="w-8 h-8 text-teal-600 animate-pulse" />
                     </div>
                 </div>
 
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">
+                <h2 className="text-2xl font-bold text-slate-900 mb-8">
                     Analyzing Pharmacogenomic Profile
                 </h2>
 
@@ -46,7 +46,7 @@ export function ProcessingStep() {
                                 key={index}
                                 className={cn(
                                     "flex items-center gap-3 p-3 rounded-lg transition-all duration-500",
-                                    status === "active" ? "bg-teal-50 dark:bg-teal-900/20 border border-teal-100 dark:border-teal-800" : "opacity-50"
+                                    status === "active" ? "bg-teal-50 border border-teal-100" : "opacity-50"
                                 )}
                             >
                                 <div className={cn(
@@ -59,7 +59,7 @@ export function ProcessingStep() {
                                 </div>
                                 <span className={cn(
                                     "font-medium text-sm",
-                                    status === "active" ? "text-teal-900 dark:text-teal-100" : "text-slate-500"
+                                    status === "active" ? "text-teal-900" : "text-slate-500"
                                 )}>
                                     {step.text}
                                 </span>
