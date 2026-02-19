@@ -50,8 +50,21 @@ function translateDiplotypeToPhenotype(gene: GeneSymbol, alleles: string[]): Phe
     const hasNoFunction = alleleEffects.filter(e => e === "No Function").length;
     const hasDecreased = alleleEffects.filter(e => e === "Decreased Function").length;
     const hasNormal = alleleEffects.filter(e => e === "Normal Function").length;
+    const hasIncreased = alleleEffects.filter(e => e === "Increased Function").length;
 
     // Logic for Phenotype Prediction (Simplified CPIC-style)
+
+    // URM: 2 Increased Function (e.g. *17/*17)
+    if (hasIncreased >= 2) return "URM";
+
+    // RM: 1 Normal + 1 Increased (e.g. *1/*17)
+    if (hasNormal === 1 && hasIncreased === 1) return "RM";
+
+    // Conflict: Increased + No Function (e.g. *17/*2 for CYP2C19) -> usually IM
+    if (hasIncreased === 1 && hasNoFunction === 1) return "IM";
+
+    // Conflict: Increased + Decreased -> usually NM or IM depending on gene? Let's conservative NM.
+    if (hasIncreased === 1 && hasDecreased === 1) return "NM";
 
     // PM: 2 No Function alleles
     if (hasNoFunction >= 2) return "PM";
@@ -72,8 +85,6 @@ function translateDiplotypeToPhenotype(gene: GeneSymbol, alleles: string[]): Phe
     // NM: 2 Normal, or 1 Normal + 1 Decreased (often behaves functionally Normal-ish or slight reduction)
     if (hasNormal === 2) return "NM";
     if (hasNormal === 1 && hasDecreased === 1) return "NM"; // Conservative: call it NM but maybe "NM (decreased activity)"
-
-    // URM/RM not handled yet (need *17 etc)
 
     return "NM"; // Default
 }

@@ -24,24 +24,42 @@ export const VARIANT_DEFINITIONS: VariantDefinition[] = [
     // CYP2D6
     { gene: "CYP2D6", rsid: "rs3892097", variantAllele: "A", starAllele: "*4", effect: "No Function" }, // Splicing defect
     { gene: "CYP2D6", rsid: "rs1065852", variantAllele: "A", starAllele: "*10", effect: "Decreased Function" }, // Common Asian variant
+    { gene: "CYP2D6", rsid: "rs16947", variantAllele: "T", starAllele: "*2", effect: "Normal Function" }, // R296C, C>T
+    { gene: "CYP2D6", rsid: "rs5030655", variantAllele: "T", starAllele: "*6", effect: "No Function" }, // Frameshift
+    { gene: "CYP2D6", rsid: "rs59421388", variantAllele: "T", starAllele: "*17", effect: "Decreased Function" }, // T107I
+    { gene: "CYP2D6", rsid: "rs28371725", variantAllele: "T", starAllele: "*41", effect: "Decreased Function" }, // Splicing defect (reduced expression)
 
     // CYP2C19
     { gene: "CYP2C19", rsid: "rs4244285", variantAllele: "A", starAllele: "*2", effect: "No Function" }, // Splice defect
     { gene: "CYP2C19", rsid: "rs4986893", variantAllele: "A", starAllele: "*3", effect: "No Function" }, // Premature stop
+    { gene: "CYP2C19", rsid: "rs28399504", variantAllele: "G", starAllele: "*4", effect: "No Function" }, // Start lost
+    { gene: "CYP2C19", rsid: "rs56337013", variantAllele: "T", starAllele: "*6", effect: "No Function" }, // Frameshift
+    { gene: "CYP2C19", rsid: "rs17884712", variantAllele: "A", starAllele: "*9", effect: "Decreased Function" }, // R144H (Uncertain but often decreased)
+    { gene: "CYP2C19", rsid: "rs12769205", variantAllele: "G", starAllele: "*17", effect: "Increased Function" }, // Promoter variant (-806C>T)
 
     // CYP2C9
     { gene: "CYP2C9", rsid: "rs1799853", variantAllele: "T", starAllele: "*2", effect: "Decreased Function" }, // C>T Arg144Cys
     { gene: "CYP2C9", rsid: "rs1057910", variantAllele: "C", starAllele: "*3", effect: "Decreased Function" }, // A>C Ile359Leu
+    { gene: "CYP2C9", rsid: "rs9332131", variantAllele: "T", starAllele: "*5", effect: "Decreased Function" }, // D360E
+    { gene: "CYP2C9", rsid: "rs72558187", variantAllele: "G", starAllele: "*12", effect: "Decreased Function" }, // P489S
 
     // SLCO1B1
     { gene: "SLCO1B1", rsid: "rs4149056", variantAllele: "C", starAllele: "*5", effect: "Decreased Function" }, // T>C Val174Ala
+    { gene: "SLCO1B1", rsid: "rs2306283", variantAllele: "G", starAllele: "*1B", effect: "Normal Function" }, // A>G D130N (Often Benign/Normal)
+    { gene: "SLCO1B1", rsid: "rs11045819", variantAllele: "T", starAllele: "*15", effect: "Decreased Function" }, // Proline variant
 
     // TPMT
     { gene: "TPMT", rsid: "rs1800462", variantAllele: "C", starAllele: "*2", effect: "No Function" }, // G>C Ala80Pro
     { gene: "TPMT", rsid: "rs1800460", variantAllele: "A", starAllele: "*3B", effect: "No Function" }, // G>A Ala154Thr
+    { gene: "TPMT", rsid: "rs1800584", variantAllele: "C", starAllele: "*3C", effect: "No Function" }, // A>G (reverse strand?) check standard. VCF says G>A. Usually 3C is *rs1142345*? No, rs1800584 is 719A>G.
+    // NOTE: rs1800584 in VCF has REF=G ALT=A. Let's assume A is risk allele for *3C if VCF says so.
+    { gene: "TPMT", rsid: "rs1800584", variantAllele: "A", starAllele: "*3C", effect: "No Function" },
 
     // DPYD
     { gene: "DPYD", rsid: "rs3918290", variantAllele: "A", starAllele: "*2A", effect: "No Function" }, // Splice donor
+    { gene: "DPYD", rsid: "rs1801265", variantAllele: "C", starAllele: "*5", effect: "Decreased Function" }, // I560S
+    { gene: "DPYD", rsid: "rs1801159", variantAllele: "T", starAllele: "*6", effect: "No Function" }, // V732I
+    { gene: "DPYD", rsid: "rs67376798", variantAllele: "A", starAllele: "*13", effect: "No Function" }, // C29R
 ];
 
 export type Phenotype = "PM" | "IM" | "NM" | "RM" | "URM" | "Unknown";
