@@ -18,11 +18,13 @@ export async function generateClinicalExplanation(
     variants: DetectedVariant[]
 ): Promise<LLMExplanation> {
     const apiKey = process.env.GEMINI_API_KEY;
+
+    // Debug logging for Vercel
     if (!apiKey) {
-        console.error("GEMINI_API_KEY is not set");
+        console.error("GEMINI_API_KEY is missing. Env vars available:", Object.keys(process.env).filter(k => !k.includes("KEY") && !k.includes("SECRET")));
         return {
-            summary: "Configuration Error: API Key missing.",
-            mechanism: "Please Checking server logs.",
+            summary: "Configuration Error: API Key missing in environment variables.",
+            mechanism: "Please check Vercel Project Settings > Environment Variables. Ensure 'GEMINI_API_KEY' is added to the Production environment.",
             citations: []
         };
     }
