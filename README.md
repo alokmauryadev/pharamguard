@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PharmaGuard: Pharmacogenomic Risk Prediction
 
-## Getting Started
+## Project Overview
+PharmaGuard is an AI-powered precision medicine application designed to prevent adverse drug reactions. It analyzes patient genetic data (VCF files) against specific drugs to predict pharmacogenomic risks.
 
-First, run the development server:
+**Features:**
+- **VCF Parsing**: Extracts key pharmacogenomic variants from standard `.vcf` files.
+- **Risk Prediction**: Uses CPIC-guideline based logic to determine phenotypes and risk levels.
+- **AI Explanations**: Integrates Google Gemini to provide clinical explanations and biological mechanisms.
+- **Privacy First**: All analysis happens in a secure session; no data is stored permanently.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **AI**: Google Gemini API (`@google/generative-ai`)
+- **Icons**: Lucide React
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture
+1. **Frontend**: Next.js Client Components (React) handle file uploads and state.
+2. **API Route**: `/api/analyze` handles the logic.
+   - **VCF Parser**: Reads the file buffer.
+   - **Knowledge Base**: Static JSON definitions of Gene-Drug interactions.
+   - **Risk Engine**: Determines phenotype (PM/IM/NM/RM) and maps to risk.
+   - **LLM Service**: Generates human-readable clinical context.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation & Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/pharmaguard.git
+   cd pharmaguard
+   ```
 
-## Learn More
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Configure Environment**
+   - Copy `.env.example` to `.env.local`
+   - Add your Google Gemini API Key:
+     ```
+     GEMINI_API_KEY=your_key_here
+     ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## usage
+1. **Upload VCF**: Use the provided `sample_data/high_risk_cyp2c19.vcf` file.
+2. **Select Drug**: Choose "Clopidogrel" (Expected Risk: **Ineffective** due to CYP2C19 *2/*2).
+3. **Analyze**: View the dashboard for risk assessment and AI explanation.
 
-## Deploy on Vercel
+## API Documentation
+**POST** `/api/analyze`
+- **Content-Type**: `multipart/form-data`
+- **Body**:
+  - `file`: (.vcf) The patient's genetic file.
+  - `drugs`: (string) Comma-separated list of drug names.
+- **Response**: JSON Array of `AnalysisResult` objects.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Team
+- **Developer**: Alok M
+- **Role**: Full Stack Engineer
