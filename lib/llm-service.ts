@@ -1,9 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { RiskAssessment } from "./risk-engine";
 import { DetectedVariant } from "./vcf-parser";
-
-// Remove global instance to prevent build-time error if env var is missing
-// const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+import { VARIANT_DEFINITIONS } from "./knowledge-base";
 
 export interface LLMExplanation {
     summary: string;
@@ -31,6 +29,12 @@ export async function generateClinicalExplanation(
 
     const genAI = new GoogleGenAI({ apiKey });
 
+    const variantDescriptions = variants.map(v => {
+        const def = VARIANT_DEFINITIONS.find(d => d.rsid === v.rsid);
+        const effect = def ? def.effect : "Unknown Effect";
+        return `${v.rsid} (Genotype: ${v.genotype}, Effect: ${effect})`;
+    }).join(", ");
+
     const prompt = `
     You are an expert clinical pharmacogenomicist. 
     Analyze the following patient result:
@@ -39,7 +43,7 @@ export async function generateClinicalExplanation(
     Gene: ${gene}
     Phenotype: ${risk.phenotype} (${risk.diplotype})
     Risk Level: ${risk.riskLabel}
-    Detected Variants: ${variants.map(v => `${v.rsid} (Genotype: ${v.genotype})`).join(", ") || "None"}
+    Detected Variants: ${variantDescriptions || "None"}
     
     Task:
     1. Provide a concise clinical summary (2-3 sentences) explaining WHY this risk exists for this patient.

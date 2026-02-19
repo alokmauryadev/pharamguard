@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { parseVCF, ParseResult } from "@/lib/vcf-parser";
 import { assessRisk, RiskAssessment } from "@/lib/risk-engine";
 import { generateClinicalExplanation, LLMExplanation } from "@/lib/llm-service";
-import { GeneSymbol } from "@/lib/knowledge-base";
+import { GeneSymbol, VARIANT_DEFINITIONS } from "@/lib/knowledge-base";
 import { AnalysisResult } from "@/types";
 
 export const maxDuration = 60; // Allow longer timeout for LLM
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         const parseResult: ParseResult = parseVCF(text);
 
         // Dummy patient ID (In real app, extract from VCF header if exists)
-        const patientId = "PATIENT_" + Math.random().toString(36).substr(2, 5).toUpperCase();
+        const patientId = parseResult.metadata?.sampleId || "PATIENT_" + Math.random().toString(36).substr(2, 5).toUpperCase();
         const drugs = drugsInput.split(",").map(d => d.trim()).filter(Boolean);
 
 
@@ -40,7 +40,9 @@ export async function POST(req: NextRequest) {
 
             // 3. Generate Reports
             const geneKey = Object.keys(riskProfile)[0] as GeneSymbol;
-            const riskData = riskProfile[geneKey];
+            const riskData = riskProfile[geneKey] as RiskAssessment; // Cast to avoid undefined
+
+            if (!riskData) return null;
 
             // 4. LLM Explanation (Parallel)
             const llmExplanation = await generateClinicalExplanation(
@@ -65,11 +67,14 @@ export async function POST(req: NextRequest) {
                     phenotype: riskData.phenotype,
                     detected_variants: parseResult.variants
                         .filter(v => v.gene === geneKey)
-                        .map((v) => ({
-                            rsid: v.rsid,
-                            genotype: v.genotype,
-                            impact: v.impact,
-                        })),
+                        .map((v) => {
+                            const def = VARIANT_DEFINITIONS.find(d => d.rsid === v.rsid);
+                            return {
+                                rsid: v.rsid,
+                                genotype: v.genotype,
+                                impact: def ? def.effect : "Unknown",
+                            };
+                        }),
                 },
                 clinical_recommendation: {
                     summary: riskData.recommendation,
