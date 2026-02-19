@@ -1,0 +1,10 @@
+##fileformat=VCFv4.2
+##fileDate=20240219
+##source=PharmaGuard_Test_Generator
+##reference=hg38
+##INFO=<ID=GENE,Number=1,Type=String,Description="Gene Symbol">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	SAMPLE
+10	96522463	rs4244285	G	A	.	PASS	GENE=CYP2C19	GT	1/1
+22	42522613	rs3892097	C	T	.	PASS	GENE=CYP2D6	GT	0/0
+10	96741053	rs1799853	C	T	.	PASS	GENE=CYP2C9	GT	0/1
