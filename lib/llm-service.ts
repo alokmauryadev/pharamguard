@@ -1,8 +1,8 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { RiskAssessment } from "./risk-engine";
 import { DetectedVariant } from "./vcf-parser";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export interface LLMExplanation {
     summary: string;
@@ -16,8 +16,6 @@ export async function generateClinicalExplanation(
     risk: RiskAssessment,
     variants: DetectedVariant[]
 ): Promise<LLMExplanation> {
-    const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
-
     const prompt = `
     You are an expert clinical pharmacogenomicist. 
     Analyze the following patient result:
@@ -42,9 +40,15 @@ export async function generateClinicalExplanation(
   `;
 
     try {
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
+        const response = await genAI.models.generateContent({
+            model: "gemini-3-flash-preview",
+            contents: prompt,
+        });
+
+        // In @google/genai, text is a property, not a function
+        const text = response.text;
+
+        if (!text) throw new Error("Empty response from LLM");
 
         // Clean up markdown code blocks if present
         const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
@@ -52,7 +56,7 @@ export async function generateClinicalExplanation(
     } catch (error) {
         console.error("LLM Generation Error:", error);
         return {
-            summary: "Detailed clinical explanation unavailable at this time.",
+            summary: "Clinical explanation unavailable (AI Service Error).",
             mechanism: "Integration with knowledge base suggests " + risk.recommendation,
             citations: ["CPIC Guidelines"]
         };
