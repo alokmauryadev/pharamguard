@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import OpenAI from 'openai';
 import { RiskAssessment } from "./risk-engine";
 import { DetectedVariant } from "./vcf-parser";
 import { VARIANT_DEFINITIONS } from "./knowledge-base";
@@ -15,19 +15,23 @@ export async function generateClinicalExplanation(
     risk: RiskAssessment,
     variants: DetectedVariant[]
 ): Promise<LLMExplanation> {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.OPENROUTER_API_KEY;
 
     // Debug logging for Vercel
     if (!apiKey) {
-        console.error("GEMINI_API_KEY is missing. Env vars available:", Object.keys(process.env).filter(k => !k.includes("KEY") && !k.includes("SECRET")));
+        console.error("OPENROUTER_API_KEY is missing. Env vars available:", Object.keys(process.env).filter(k => !k.includes("KEY") && !k.includes("SECRET")));
         return {
             summary: "Configuration Error: API Key missing in environment variables.",
-            mechanism: "Please check Vercel Project Settings > Environment Variables. Ensure 'GEMINI_API_KEY' is added to the Production environment.",
+            mechanism: "Please check Vercel Project Settings > Environment Variables. Ensure 'OPENROUTER_API_KEY' is added to the Production environment.",
             citations: []
         };
     }
 
-    const genAI = new GoogleGenAI({ apiKey });
+    const client = new OpenAI({
+        baseURL: 'https://openrouter.ai/api/v1',
+        apiKey: apiKey,
+        dangerouslyAllowBrowser: true // Determine if we are running in browser or server. Since this is likely a server action or API route, we should be fine, but if it runs on client, we need this or a proxy. Given it's imported in `app/api/analyze/route.ts` (Server), this is fine. Wait, `app/api` is server-side.
+    });
 
     const variantDescriptions = variants.map(v => {
         const def = VARIANT_DEFINITIONS.find(d => d.rsid === v.rsid);
@@ -59,17 +63,23 @@ export async function generateClinicalExplanation(
   `;
 
     try {
-        const response = await genAI.models.generateContent({
-            model: "gemini-3-flash-preview",
-            contents: prompt,
-        });
+        const completion = await client.chat.completions.create({
+            model: 'stepfun/step-3.5-flash:free',
+            messages: [
+                {
+                    role: 'user',
+                    content: prompt,
+                },
+            ],
+            // @ts-ignore
+            reasoning: { enabled: true }
+        } as any);
 
-        // In @google/genai, text is a property, not a function
-        const text = response.text;
+        const text = completion.choices[0].message.content;
 
         if (!text) throw new Error("Empty response from LLM");
 
-        // Clean up markdown code blocks if present
+        // Clean up markdown code blocks if present (OpenRouter models sometimes wrap in ```json)
         const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
         return JSON.parse(jsonStr);
     } catch (error) {
