@@ -1,61 +1,70 @@
-# PharmaGuard: Pharmacogenomic Risk Prediction
+# PharmaGuard: AI-Powered Pharmacogenomic Risk Prediction
 
-## Project Overview
-PharmaGuard is an AI-powered precision medicine application designed to prevent adverse drug reactions. It analyzes patient genetic data (VCF files) against specific drugs to predict pharmacogenomic risks.
+PharmaGuard is a precision medicine platform that analyzes genomic data to prevent adverse drug reactions. By cross-referencing patient VCF files against clinical knowledge bases, it provides real-time, AI-driven risk assessments.
 
-**Features:**
-- **VCF Parsing**: Extracts key pharmacogenomic variants from standard `.vcf` files.
-- **Risk Prediction**: Uses CPIC-guideline based logic to determine phenotypes and risk levels.
-- **AI Explanations**: Integrates Google Gemini to provide clinical explanations and biological mechanisms.
-- **Privacy First**: All analysis happens in a secure session; no data is stored permanently.
+**🌐 Live Demo:** [https://pharamguard-mu.vercel.app/](https://pharamguard-mu.vercel.app/)
 
-## Tech Stack
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **AI**: Google Gemini API (`@google/generative-ai`)
-- **Icons**: Lucide React
+---
 
-## Architecture
-1. **Frontend**: Next.js Client Components (React) handle file uploads and state.
-2. **API Route**: `/api/analyze` handles the logic.
-   - **VCF Parser**: Reads the file buffer.
-   - **Knowledge Base**: Static JSON definitions of Gene-Drug interactions.
-   - **Risk Engine**: Determines phenotype (PM/IM/NM/RM) and maps to risk.
-   - **LLM Service**: Generates human-readable clinical context.
+## 🚀 Modern Tech Stack
 
-## Installation & Setup
+*   **Frontend Ecosystem:** Built with **Next.js 16** (App Router) and **React 19** for optimized server-side rendering and a fluid, "App-like" user experience.
+*   **Design Language:** A clinical-grade UI implemented via **Tailwind CSS**, featuring a modern design system with glassmorphism and focus on high-density data readability.
+*   **Server Architecture:** High-performance, edge-ready **Next.js Server Functions** providing a unified API layer with minimal latency.
+*   **Intelligence Layer:** Integrated with **Stepfun Flash** via **OpenRouter**, delivering rapid, LLM-powered clinical insights and pharmacogenomic risk summaries.
+*   **Genomic Processing:** Proprietary **VCF Parsing Engine** paired with a high-fidelity **CPIC-aligned Knowledge Base** for precise variant-to-drug mapping.
+*   **Reporting Suite:** Secure, client-side PDF synthesis using **jsPDF** and **html2canvas**, ensuring sensitive health data remains on-device during report generation.
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/pharmaguard.git
-   cd pharmaguard
-   ```
+---
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+## 🛠️ Architecture
 
-3. **Configure Environment**
-   - Copy `.env.example` to `.env.local`
-   - Add your Google Gemini API Key:
-     ```
-     GEMINI_API_KEY=your_key_here
-     ```
+1.  **Frontend**: Next.js 16 Client Components handle genomic data ingestion and state management.
+2.  **API Route**: `/api/analyze` orchestrates the analysis pipeline:
+    *   **VCF Parser**: High-speed buffer processing for variant identification.
+    *   **Knowledge Base**: JSON-driven clinical definitions of Gene-Drug interactions (CPIC-aligned).
+    *   **Risk Engine**: Deterministic mapping of genotypes to clinical phenotypes (PM/IM/NM/RM).
+    *   **LLM Service**: Generates structured clinical context using Stepfun Flash.
 
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000) with your browser.
+---
 
-## usage
-1. **Upload VCF**: Use the provided `sample_data/high_risk_cyp2c19.vcf` file.
-2. **Select Drug**: Choose "Clopidogrel" (Expected Risk: **Ineffective** due to CYP2C19 *2/*2).
-3. **Analyze**: View the dashboard for risk assessment and AI explanation.
+## 📦 Installation & Setup
 
-## API Documentation
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/alokmauryadev/pharamguard.git
+    cd pharamguard
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure Environment**
+    - Copy `.env.example` to `.env.local`
+    - Add your OpenRouter API Key:
+      ```
+      OPENROUTER_API_KEY=your_key_here
+      ```
+
+4.  **Run the development server**
+    ```bash
+    npm run dev
+    ```
+    Open [http://localhost:3000](http://localhost:3000) with your browser.
+
+---
+
+## 🧪 Usage & Testing
+
+1.  **Upload VCF**: Use the sample data in `sample_data/high_risk_simvastatin.vcf`.
+2.  **Select Drug**: Choose "Simvastatin" (Expected: Risk assessment based on SLCO1B1).
+3.  **Analyze**: View the dashboard for colored risk badges, AI clinical insights, and one-click PDF export.
+
+---
+
+## 📄 API Documentation
 **POST** `/api/analyze`
 - **Content-Type**: `multipart/form-data`
 - **Body**:
@@ -63,6 +72,13 @@ PharmaGuard is an AI-powered precision medicine application designed to prevent 
   - `drugs`: (string) Comma-separated list of drug names.
 - **Response**: JSON Array of `AnalysisResult` objects.
 
-## Team
+---
+
+## 🛡️ Privacy & Security
+PharmaGuard is designed with a **Privacy-First** architecture. Genetic data is processed in-memory during the session and is **never stored** on our servers or databases. PDF reports are generated entirely in the browser to ensure sensitive data never leaves the patient's device.
+
+---
+
+## 👨‍💻 Team
 - **Developer**: Alok M
-- **Role**: Full Stack Engineer
+- **Role**: Lead Full Stack Engineer
