@@ -160,7 +160,7 @@ export default function LandingPage() {
             },
             {
               label: "Supported Drugs",
-              value: "15+",
+              value: "6+",
               detail: "From antidepressants and anticoagulants to chemotherapy agents",
               progress: 75,
               icon: FlaskConical,

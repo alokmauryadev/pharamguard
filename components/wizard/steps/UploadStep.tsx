@@ -118,7 +118,10 @@ export function UploadStep({ onNext }: { onNext: () => void }) {
                                     {file.name}
                                 </p>
                                 <p className="text-xs mt-0.5" style={{ color: "var(--gray-500)" }}>
-                                    {(file.size / 1024 / 1024).toFixed(2)} MB &nbsp;·&nbsp; Ready for analysis
+                                    {file.size < 1024 * 1024
+                                        ? `${(file.size / 1024).toFixed(2)} KB`
+                                        : `${(file.size / 1024 / 1024).toFixed(2)} MB`}
+                                    &nbsp;·&nbsp; Ready for analysis
                                 </p>
                             </div>
                             <button
