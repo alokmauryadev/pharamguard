@@ -4,6 +4,8 @@ PharmaGuard is a precision medicine platform that analyzes genomic data to preve
 
 **🌐 Live Demo:** [https://pharamguard-mu.vercel.app/](https://pharamguard-mu.vercel.app/)
 
+**🎥 Watch Demo Video:** [LinkedIn Post](https://www.linkedin.com/posts/alokmauryadev_rift2026-rift2026-pharmaguard-ugcPost-7430371900398219265-VGvK?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAF9SP4YB3ImI6jMy_FMbQJNnXj92SAKZ9q8)
+
 ---
 
 ## 🚀 Modern Tech Stack
