@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
 :root {
+  /* Clean Medical Light Theme */
   --background: #ffffff;
-  --foreground: #171717;
+  /* Pure white for cleanliness */
+  --foreground: #1e293b;
+  /* Slate 800 for text */
+
+  /* Brand Colors: Professional Teal & Blue */
+  --primary: #0d9488;
+  /* Teal 600 */
+  --primary-foreground: #ffffff;
+
+  --secondary: #f1f5f9;
+  /* Slate 100 */
+  --secondary-foreground: #0f172a;
+  /* Slate 900 */
+
+  --accent: #f0f9ff;
+  /* Sky 50 */
+  --accent-foreground: #0284c7;
+  /* Sky 600 */
+
+  --card: #ffffff;
+  --card-foreground: #1e293b;
+
+  --border: #e2e8f0;
+  /* Slate 200 */
+  --input: #e2e8f0;
+  --ring: #0d9488;
+  /* Teal 600 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 }
 
+/* Force light mode by default, user can't toggle yet so just override dark media query or keep it minimal */
 @media (prefers-color-scheme: dark) {
+
+  /* We are IGNORING system dark mode for now to ensure the 'clean medical' look the user wants */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #1e293b;
+    --primary: #0d9488;
+    --primary-foreground: #ffffff;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #0f172a;
+    --accent: #f0f9ff;
+    --accent-foreground: #0284c7;
+    --card: #ffffff;
+    --card-foreground: #1e293b;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: #0d9488;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  /* Subtle mesh gradient for premium feel, but very light */
+  background-image:
+    radial-gradient(at 0% 0%, rgba(13, 148, 136, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(2, 132, 199, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Glassmorphism Utilities - Lighter & Cleaner */
+.glass {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-card {
+  background: #ffffff;
+  /* Solid background for better PDF support and cleanliness */
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
