@@ -13,6 +13,8 @@ export async function POST(req: NextRequest) {
         const formData = await req.formData();
         const file = formData.get("file") as File;
         const drugsInput = formData.get("drugs") as string;
+        const provider = formData.get("provider") as string || "openrouter";
+        const model = formData.get("model") as string || "stepfun/step-3.5-flash:free";
 
         if (!file || !drugsInput) {
             return NextResponse.json({ error: "Missing file or drugs" }, { status: 400 });
@@ -32,6 +34,7 @@ export async function POST(req: NextRequest) {
         // 2. Process each drug
         // 2. Process each drug (Concurrent execution for speed)
         const analysisPromises = drugs.map(async (drug) => {
+            const startTime = performance.now();
             const riskProfile = assessRisk(drug, parseResult.variants);
 
             if (!riskProfile) {
@@ -49,7 +52,9 @@ export async function POST(req: NextRequest) {
                 drug,
                 geneKey,
                 riskData,
-                parseResult.variants.filter(v => v.gene === geneKey)
+                parseResult.variants.filter(v => v.gene === geneKey),
+                provider,
+                model
             );
 
             return {
@@ -83,6 +88,7 @@ export async function POST(req: NextRequest) {
                 quality_metrics: {
                     vcf_parsing_success: parseResult.isSuccess,
                     variant_count: parseResult.variants.length,
+                    processing_time_ms: Math.round(performance.now() - startTime),
                     error_msg: parseResult.error,
                 },
             } as AnalysisResult;

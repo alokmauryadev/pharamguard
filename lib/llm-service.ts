@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+import { Groq } from 'groq-sdk';
 import { RiskAssessment } from "./risk-engine";
 import { DetectedVariant } from "./vcf-parser";
 import { VARIANT_DEFINITIONS } from "./knowledge-base";
@@ -13,7 +14,9 @@ export async function generateClinicalExplanation(
     drug: string,
     gene: string,
     risk: RiskAssessment,
-    variants: DetectedVariant[]
+    variants: DetectedVariant[],
+    provider: string = "openrouter",
+    model: string = "stepfun/step-3.5-flash:free"
 ): Promise<LLMExplanation> {
     const apiKey = process.env.OPENROUTER_API_KEY;
 
@@ -63,19 +66,40 @@ export async function generateClinicalExplanation(
   `;
 
     try {
-        const completion = await client.chat.completions.create({
-            model: 'stepfun/step-3.5-flash:free',
-            messages: [
-                {
-                    role: 'user',
-                    content: prompt,
-                },
-            ],
-            // @ts-ignore
-            reasoning: { enabled: true }
-        } as any);
+        let text = "";
 
-        const text = completion.choices[0].message.content;
+        if (provider === "groq") {
+            const groqApiKey = process.env.GROQ_API_KEY;
+            if (!groqApiKey) {
+                console.warn("GROQ_API_KEY is missing. Falling back to simple reasoning.");
+                throw new Error("GROQ_API_KEY missing");
+            }
+
+            const groq = new Groq({ dangerouslyAllowBrowser: true }); // Using it server side, but setting true just in case based on OpenRouter setup
+
+            const completion = await groq.chat.completions.create({
+                model: model,
+                messages: [
+                    {
+                        role: 'user',
+                        content: prompt,
+                    },
+                ],
+            });
+            text = completion.choices[0]?.message?.content || "";
+        } else {
+            const completion = await client.chat.completions.create({
+                model: model,
+                messages: [
+                    {
+                        role: 'user',
+                        content: prompt,
+                    },
+                ],
+            });
+
+            text = completion.choices[0]?.message?.content || "";
+        }
 
         if (!text) throw new Error("Empty response from LLM");
 

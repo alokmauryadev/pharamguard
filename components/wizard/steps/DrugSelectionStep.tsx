@@ -3,10 +3,28 @@
 import { useAnalysis } from "@/context/AnalysisContext";
 import { SUPPORTED_DRUGS } from "@/lib/knowledge-base";
 import { cn } from "@/lib/utils";
-import { Check, ArrowRight, ArrowLeft, Pill } from "lucide-react";
+import { Check, ArrowRight, ArrowLeft, Pill, Cpu } from "lucide-react";
+
+const PROVIDERS = {
+    openrouter: [
+        { id: "stepfun/step-3.5-flash:free", name: "Step 3.5 Flash (Free)" },
+        { id: "openai/gpt-3.5-turbo", name: "GPT-3.5 Turbo" },
+        { id: "anthropic/claude-3-haiku", name: "Claude 3 Haiku" },
+    ],
+    groq: [
+        { id: "llama-3.1-8b-instant", name: "Llama 3.1 8B" },
+        { id: "llama3-70b-8192", name: "Llama 3 70B" },
+        { id: "mixtral-8x7b-32768", name: "Mixtral 8x7b" },
+        { id: "openai/gpt-oss-120b", name: "GPT OSS 120B" },
+    ]
+};
 
 export function DrugSelectionStep({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
-    const { selectedDrugs, setSelectedDrugs } = useAnalysis();
+    const {
+        selectedDrugs, setSelectedDrugs,
+        llmProvider, setLlmProvider,
+        llmModel, setLlmModel
+    } = useAnalysis();
 
     const toggleDrug = (drug: string) => {
         if (selectedDrugs.includes(drug)) {
@@ -115,6 +133,45 @@ export function DrugSelectionStep({ onNext, onBack }: { onNext: () => void; onBa
                             </button>
                         );
                     })}
+                </div>
+
+                {/* LLM Selection Section */}
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-8">
+                    <div className="flex items-center gap-2 mb-4">
+                        <Cpu className="w-4 h-4 text-indigo-500" />
+                        <h3 className="font-semibold text-sm text-slate-800">AI Model Settings</h3>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Provider</label>
+                            <select
+                                value={llmProvider}
+                                onChange={(e) => {
+                                    const newProvider = e.target.value as "openrouter" | "groq";
+                                    setLlmProvider(newProvider);
+                                    setLlmModel(PROVIDERS[newProvider][0].id); // reset model when provider changes
+                                }}
+                                className="w-full text-sm font-medium bg-white border border-slate-300 text-slate-800 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                            >
+                                <option value="openrouter">OpenRouter</option>
+                                <option value="groq">Groq (Ultra-Fast)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Model</label>
+                            <select
+                                value={llmModel}
+                                onChange={(e) => setLlmModel(e.target.value)}
+                                className="w-full text-sm font-medium bg-white border border-slate-300 text-slate-800 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                            >
+                                {PROVIDERS[llmProvider].map(model => (
+                                    <option key={model.id} value={model.id}>{model.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Footer Actions */}

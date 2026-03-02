@@ -29,6 +29,7 @@ export interface AnalysisResult {
     quality_metrics: {
         vcf_parsing_success: boolean;
         variant_count: number;
+        processing_time_ms?: number;
         error_msg?: string;
     };
 }

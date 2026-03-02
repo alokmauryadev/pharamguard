@@ -11,6 +11,12 @@ export default function ReportPage() {
     const router = useRouter();
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
     const [copySuccess, setCopySuccess] = useState(false);
+    const [showJsonPreview, setShowJsonPreview] = useState(false);
+    const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
+
+    const toggleExpand = (id: string) => {
+        setExpandedItems(prev => ({ ...prev, [id]: !prev[id] }));
+    };
 
     useEffect(() => {
         if (analysisResults.length === 0) {
@@ -134,12 +140,19 @@ export default function ReportPage() {
                         </button>
 
                         <button
-                            onClick={handleDownloadJson}
-                            className="ds-btn-secondary"
-                            style={{ fontSize: "12px", padding: "8px 14px", gap: "6px" }}
+                            onClick={() => setShowJsonPreview(!showJsonPreview)}
+                            className={copySuccess ? "ds-btn-ghost" : "ds-btn-secondary"} // Simple styling distinction
+                            style={{
+                                fontSize: "12px",
+                                padding: "8px 14px",
+                                gap: "6px",
+                                background: showJsonPreview ? "var(--gray-800)" : undefined,
+                                color: showJsonPreview ? "white" : undefined,
+                                borderColor: showJsonPreview ? "var(--gray-800)" : undefined
+                            }}
                         >
                             <FileJson className="w-3.5 h-3.5" />
-                            JSON
+                            {showJsonPreview ? "Hide JSON" : "Preview JSON"}
                         </button>
 
                         <button
@@ -191,6 +204,25 @@ export default function ReportPage() {
                         {analysisResults[0]?.patient_id && ` · Patient ID: ${analysisResults[0].patient_id}`}
                     </p>
                 </div>
+
+                {/* JSON Preview Panel */}
+                {showJsonPreview && (
+                    <div className="bg-slate-950 border border-slate-800 rounded-xl p-4 shadow-xl overflow-hidden mb-8 animate-in slide-in-from-top-4 duration-300">
+                        <div className="flex items-center justify-between mb-3 border-b border-slate-800 pb-3">
+                            <span className="text-slate-300 text-xs font-semibold uppercase tracking-wider">Raw JSON Output</span>
+                            <div className="flex gap-1">
+                                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                            </div>
+                        </div>
+                        <div className="overflow-auto max-h-96 pr-2">
+                            <pre className="text-[13px] font-mono text-emerald-400 leading-relaxed">
+                                {JSON.stringify(analysisResults, null, 2)}
+                            </pre>
+                        </div>
+                    </div>
+                )}
 
                 {/* Drug Cards */}
                 <div className="space-y-8">
@@ -340,6 +372,64 @@ export default function ReportPage() {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                {/* Technical Details (Expandable) */}
+                                <div className="p-4 bg-slate-50 border-t" style={{ borderColor: "var(--border)" }}>
+                                    <button
+                                        onClick={() => toggleExpand(index.toString())}
+                                        className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 font-medium w-full justify-center transition-colors px-4 py-1"
+                                    >
+                                        {expandedItems[index] ? "Hide Technical & Metric Details" : "View Technical & Metric Details"}
+                                    </button>
+
+                                    {expandedItems[index] && (
+                                        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm animate-in slide-in-from-top-2 duration-300">
+                                            <div className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+                                                <h5 className="font-bold text-slate-900 mb-3 border-b border-slate-100 pb-2">Analysis Quality</h5>
+                                                <div className="space-y-2 text-slate-600">
+                                                    <div className="flex justify-between">
+                                                        <span className="text-slate-400">AI Confidence:</span>
+                                                        <span className="font-medium text-emerald-600">{(result.risk_assessment.confidence_score * 100).toFixed(0)}%</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span className="text-slate-400">Process Time:</span>
+                                                        <span className="font-medium">{result.quality_metrics.processing_time_ms ? `${result.quality_metrics.processing_time_ms}ms` : 'N/A'}</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span className="text-slate-400">Variants Linked:</span>
+                                                        <span className="font-medium">{result.pharmacogenomic_profile.detected_variants.length} Detected</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm md:col-span-2 lg:col-span-1">
+                                                <h5 className="font-bold text-slate-900 mb-3 border-b border-slate-100 pb-2">File Tracing</h5>
+                                                <div className="space-y-2 text-slate-600 text-xs">
+                                                    <p className="flex flex-col"><span className="text-slate-400 mb-0.5">Patient ID:</span> <span className="font-mono bg-slate-50 p-1 rounded border border-slate-100">{result.patient_id}</span></p>
+                                                    <p className="flex justify-between mt-1"><span className="text-slate-400">Timestamp:</span> <span>{new Date(result.timestamp).toLocaleTimeString()}</span></p>
+                                                    <p className="flex justify-between"><span className="text-slate-400">VCF Scanned:</span> <span>{result.quality_metrics.vcf_parsing_success ? "Successful" : "Failed"}</span></p>
+                                                </div>
+                                            </div>
+
+                                            {result.pharmacogenomic_profile.detected_variants.length > 0 && (
+                                                <div className="bg-slate-50 border border-slate-200 p-4 rounded-xl md:col-span-2 lg:col-span-3">
+                                                    <h5 className="font-bold text-slate-900 mb-3 text-sm">Target Variants Detailed View</h5>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {result.pharmacogenomic_profile.detected_variants.map((v, i) => (
+                                                            <div key={i} className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs flex items-center gap-2 shadow-sm">
+                                                                <span className="font-mono font-bold text-indigo-600">{v.rsid}</span>
+                                                                <span className="text-slate-400">|</span>
+                                                                <span className="font-medium text-slate-700">{v.genotype}</span>
+                                                                <span className="text-slate-400">|</span>
+                                                                <span className="text-slate-500 italic max-w-[150px] truncate">{v.impact}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         );

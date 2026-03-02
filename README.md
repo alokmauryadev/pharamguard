@@ -82,5 +82,12 @@ PharmaGuard is designed with a **Privacy-First** architecture. Genetic data is p
 ---
 
 ## 👨‍💻 Team
-- **Developer**: Alok M
-- **Role**: Lead Full Stack Engineer
+
+### **Alok Maurya** (Leader)
+- 📧 [alokmaurya.dev@gmail.com](mailto:alokmaurya.dev@gmail.com)
+
+### **Anubhav Tiwari**
+- 📧 [tiwarianubhav186@gmail.com](mailto:tiwarianubhav186@gmail.com)
+
+### **Himanshu Dubey**
+- 📧 [hackerhimanshudubey7778@gmail.com](mailto:hackerhimanshudubey7778@gmail.com)

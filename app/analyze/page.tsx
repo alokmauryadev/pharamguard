@@ -13,7 +13,7 @@ import { AnalysisResult } from "@/types";
 
 export default function AnalyzePage() {
     const router = useRouter();
-    const { file, selectedDrugs, setAnalysisResults } = useAnalysis();
+    const { file, selectedDrugs, setAnalysisResults, llmProvider, llmModel } = useAnalysis();
     const [currentStep, setCurrentStep] = useState(1);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
 
@@ -29,6 +29,8 @@ export default function AnalyzePage() {
             const formData = new FormData();
             formData.append("file", file);
             formData.append("drugs", selectedDrugs.join(","));
+            formData.append("provider", llmProvider);
+            formData.append("model", llmModel);
 
             const response = await fetch("/api/analyze", {
                 method: "POST",
